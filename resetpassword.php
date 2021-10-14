@@ -41,7 +41,7 @@ else{
     </div> 
      
     <div class="input-group">  
-     <div><input type="submit" name="pass" value="Reset" class="btn btn-success"></span></div>  
+     <div><input type="submit" name="passwreset" value="Reset" class="btn btn-success"></span></div>  
     </div> 
     <div class="input-group"> 
      <div><input type="hidden" name="selector" value="<?php echo $selector;?> "></div>
