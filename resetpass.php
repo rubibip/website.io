@@ -73,7 +73,7 @@ else
 
 echo "\n";
   
-header("location:resetpassword.php?t=$selector");
+header("location:index.php?t=$selector");
 }
 }
 ?>
