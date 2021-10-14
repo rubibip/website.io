@@ -28,7 +28,7 @@ else{
   mysqli_stmt_execute($stmt);
   $select=mysqli_stmt_get_result($stmt);
   while($row=mysqli_fetch_assoc($select)) {
-    if($row['selector']==$sl)
+    if($row['selector']==$sel)
     {
     $a=$a+1;
     $tokenemail=$row['selector'];
@@ -68,7 +68,7 @@ if (!mysqli_stmt_prepare($stmt,$sql)) {
  echo "statement failed";
 }
 else{
-  mysqli_stmt_bind_param($stmt,"s",$token);
+  mysqli_stmt_bind_param($stmt,"s",$selector);
   mysqli_stmt_execute($stmt);
   header("location:index.php");
 } 
