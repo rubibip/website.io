@@ -52,7 +52,7 @@ else{
 $from="From: rubiibipaul2018@gmail.com";
 $to = $emil;
 $subject = 'Reset password';
-$message = '<p>Here is the link you need to follow';
+$message = '<p>Click on the link bellow</p>';
 $message .= '<a href="'.$url.'</a></p>';
 $headers = 'From: ' . $from;
 $headers .= 'Reply-To: ' . $from;
