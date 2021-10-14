@@ -16,12 +16,12 @@ if (!mysqli_stmt_prepare($stmt,$sql)) {
  echo "statement failed";
 }
 else{
-  mysqli_stmt_bind_param($stmt,"ss",$name,$pass);
+  mysqli_stmt_bind_param($stmt,"ss",$d,$e);
   mysqli_stmt_execute($stmt);
   $select=mysqli_stmt_get_result($stmt);
 while($user=mysqli_fetch_array($select))
 {
-if(($d==$user['username'])&&($e==$user['Password']))
+if(($d==$user['username'])&&($e==$user['password']))
 
 {
  $fst=$user['username'];
@@ -33,7 +33,7 @@ if(($d==$user['username'])&&($e==$user['Password']))
 }
 if($x)
 {
-  $query = "SELECT * FROM users WHERE Verified='Verified' ";
+  $query = "SELECT * FROM users WHERE status='Verified' ";
     $stmt = $db->prepare($query);
     if($stmt->execute()){
     $result = $stmt->get_result();
@@ -44,19 +44,19 @@ if($num_rows > 0){
 
            if(!empty($_POST["remember"]))   
    {  $check=$_POST['remember'];
-    setcookie ("member_login",$d,time()+ (10 * 365 * 24 * 60 * 60));  
-    setcookie ("member_password",$_POST['password'],time()+ (10 * 365 * 24 * 60 * 60));
-    $_SESSION["member_name"] = $username;
+    setcookie ("memberlogin",$d,time()+ (10 * 365 * 24 * 60 * 60));  
+    setcookie ("memberpassword",$_POST['password'],time()+ (10 * 365 * 24 * 60 * 60));
+    $_SESSION["membername"] = $username;
    }  
    else  
    {  
-    if(isset($_COOKIE["member_login"]))   
+    if(isset($_COOKIE["memberlogin"]))   
     {  
-     setcookie ("member_login","");  
+     setcookie ("memberlogin","");  
     }  
-    if(isset($_COOKIE["member_password"]))   
+    if(isset($_COOKIE["memberpassword"]))   
     {  
-     setcookie ("member_password","");  
+     setcookie ("memberpassword","");  
     }  
     
   else  
