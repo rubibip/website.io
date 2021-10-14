@@ -6,7 +6,7 @@ session_start();
 include 'server.php';
 $d=$_POST["username"];
 $e=$_POST["password"];
-$salt="salting" .$salt;
+$salt="salting" .$e;
   $e=hash('sha1',$salt);
    $sql = "select *from users where username = '$username' and password = '$password'";  
         $result = mysqli_query($db, $sql);  

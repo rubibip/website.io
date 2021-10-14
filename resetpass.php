@@ -1,65 +1,79 @@
 <?php 
+session_start();
 if (isset($_POST['pass'])) {
-  $t=$_POST['selector'];
+  $new=$_POST['newpassword'];
+  $newpass=$_POST['confirmpassword'];
   $a=0;
+  $new=$_POST['newpassword'];
+  $newpass=$_POST['confirmpassword'];
   
-  $pd=$_POST['newpassword'];
-  $rpd=$_POST['confirmpassword'];
-   if ($pd==$rpd) {
+   if ($new!=$newpass) {
+    echo '<script language="javascript">';
+echo 'alert("passwors dont match");';
+echo "\n";
+ 
+header("location:resetpassword.php?new=$new");
+echo '</script>';
+
+exit();
+  }
   require "server.php";
 $sql="select* from resetpaswword where selector=?";
-$st= mysqli_stmt_init($db);
-if (!mysqli_stmt_prepare($st,$sql)) {
+$pas= mysqli_stmt_init($db);
+if (!mysqli_stmt_prepare($pas,$sql)) {
  echo "statement failed";
 }
 else{
-  mysqli_stmt_bind_param($st,"s",$selector);
-  mysqli_stmt_execute($st);
-  $result=mysqli_stmt_get_result($st);
-  while($row=mysqli_fetch_assoc($result)) {
-    if($row['selector']==$t)
+  mysqli_stmt_bind_param($pas,"s",$new);
+  mysqli_stmt_execute($newpass);
+  $select=mysqli_stmt_get_result($newpass);
+  while($row=mysqli_fetch_assoc($select)) {
+    if($row['selector']==$new)
     {
-    $k=$k+1;
-    $eml=$row['email'];
+    $a=$a+1;
+    $tokenemail=$row['email'];
 }
   }
   if ($a<1) {
- echo "Submit first your request".$selector;
+ echo "you need to re-submit your request".$selector;
   }
   else
   {
-$sql="select* from resetpaswword where email=?";
-$st= mysqli_stmt_init($db);
-if (!mysqli_stmt_prepare($st,$sql)) {
- echo "statement is now failed";
-}
-else{
-  mysqli_stmt_bind_param($st,"s",$eml);
-  mysqli_stmt_execute($st);
-  $result=mysqli_stmt_get_result($st);
-  if (!$row=mysqli_fetch_assoc($result)) {
-    echo "Error has been found";
-  }
-  else
-  {
-  $sql="UPDATE users set Password=? where email=?";
-  $st= mysqli_stmt_init($db);
-if (!mysqli_stmt_prepare($st,$sql)) {
+$sql="select* from reset where email=?";
+$pas= mysqli_stmt_init($db);
+if (!mysqli_stmt_prepare($pas,$sql)) {
  echo "statement failed";
 }
 else{
-  $hashed=sha1($rpd);
-  mysqli_stmt_bind_param($st,"ss",$hashed,$eml);
-  mysqli_stmt_execute($st);
-
-  $sql="delete from password where email=?";
-     $st= mysqli_stmt_init($db);
-if (!mysqli_stmt_prepare($st,$sql)) {
- echo "statement is also  failed";
+  mysqli_stmt_bind_param($pas,"s",$tokenemail);
+  mysqli_stmt_execute($pas);
+  $select=mysqli_stmt_get_result($pas);
+  if (!$row=mysqli_fetch_assoc($select)) {
+    echo "There is an error!";
+  }
+  else
+  {
+  $sql="UPDATE users set password=? where email=?";
+  $pas= mysqli_stmt_init($db);
+if (!mysqli_stmt_prepare($pas,$sql)) {
+ echo "statement failed";
 }
 else{
-  mysqli_stmt_bind_param($st,"s",$eml);
-  mysqli_stmt_execute($st);
+  $newhash=$pass1;
+  $salted="wertyuihhhh".$newhash;
+  $newhash=hash('sha1', $salted);
+  //$x=sha1($_POST['password']);
+  mysqli_stmt_bind_param($pas,"ss",$newhash,$tokenemail);
+  mysqli_stmt_execute($pas);
+
+  $sql="delete from resetpaswword where email=?";
+     $pas= mysqli_stmt_init($db);
+if (!mysqli_stmt_prepare($pas,$sql)) {
+ echo "statement failed";
+}
+else{
+  mysqli_stmt_bind_param($pas,"s",$tokenemail);
+  mysqli_stmt_execute($pas);
   header("location:index.php");
 } 
   }
@@ -69,11 +83,6 @@ else{
 }}}
 else
 {
- echo '<script>alert("Password do not much")</script>';
-
-echo "\n";
-  
-header("location:index.php?t=$selector");
-}
+  header("location:index.php");
 }
 ?>

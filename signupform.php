@@ -30,6 +30,8 @@ $status="Not verified";
     $query = "INSERT INTO users VALUES(NULL,?,?,?,?,?,?,?)";
     mysqli_query($db, $query);
     $stmti = $db->prepare($query);
+    $salt="salting" .$password_1;
+  $password=hash('sha1',$salt);
 $stmti->bind_param('sssssss',$firstname,$lastname,$username,$email,$password,$code,$status);
 $stmti->execute();
 $stmti->close();
