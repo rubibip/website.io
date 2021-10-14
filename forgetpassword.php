@@ -22,7 +22,7 @@ include "server.php";
                     
                     
                     <div class="input-group">
-                        <input type="submit" name="subm" value="click to Resend">
+                        <input type="submit" name="subm" value="Click and Resend">
                     </div>
                 </form>
             

@@ -6,14 +6,34 @@ session_start();
 include 'server.php';
 $d=$_POST["username"];
 $e=$_POST["password"];
+$x=0;
+$y=0;
 $salt="salting" .$e;
   $e=hash('sha1',$salt);
-   $sql = "select *from users where username = '$username' and password = '$password'";  
-        $result = mysqli_query($db, $sql);  
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);  
-        $count = mysqli_num_rows($result);   
-        if($count == 1){ 
-$query = "SELECT * FROM users WHERE status='Verified' ";
+   $sql="SELECT* FROM users WHERE username=? and Password=?";
+$stmt= mysqli_stmt_init($db);
+if (!mysqli_stmt_prepare($stmt,$sql)) {
+ echo "statement failed";
+}
+else{
+  mysqli_stmt_bind_param($stmt,"ss",$name,$pass);
+  mysqli_stmt_execute($stmt);
+  $select=mysqli_stmt_get_result($stmt);
+while($user=mysqli_fetch_array($select))
+{
+if(($d==$user['username'])&&($e==$user['Password']))
+
+{
+ $fst=$user['username'];
+  $x=1;
+  $_SESSION['username']=$d;
+  $_SESSION['password']=$e;
+}
+}
+}
+if($x)
+{
+  $query = "SELECT * FROM users WHERE Verified='Verified' ";
     $stmt = $db->prepare($query);
     if($stmt->execute()){
     $result = $stmt->get_result();
@@ -22,24 +42,41 @@ $query = "SELECT * FROM users WHERE status='Verified' ";
 if($num_rows > 0){
 
 
-            //echo "<h1><center> Login successful </center></h1>";  
-            include "home.php";
-            if (!empty($_POST['name'])) {
-                $name=$_POST['name'];
-          setcookie("username",$d,time()+3600*24*7);
-          setcookie("password",$e,time()+3600*24*7);
-          setcookie("remember",$name,time()+3600*24*7);
-            }
-            else
-            {
-                setcookie("username",$d,2);
-                setcookie("password",$e,2);
-            }
-        }
-        header("location:logs.php");
-        }
+           if(!empty($_POST["remember"]))   
+   {  $check=$_POST['remember'];
+    setcookie ("member_login",$d,time()+ (10 * 365 * 24 * 60 * 60));  
+    setcookie ("member_password",$_POST['password'],time()+ (10 * 365 * 24 * 60 * 60));
+    $_SESSION["member_name"] = $username;
+   }  
+   else  
+   {  
+    if(isset($_COOKIE["member_login"]))   
+    {  
+     setcookie ("member_login","");  
+    }  
+    if(isset($_COOKIE["member_password"]))   
+    {  
+     setcookie ("member_password","");  
+    }  
+    
+  else  
+  {  
+   $message = "Invalid Login";  
+  } 
+ }
 
-        else{  
-            echo "<h1> Login failed. Invalid username or password.</h1>".$e;  
-        }
+header('location:home.php');
+}
+else{
+
+header('location:loginForm.php');
+
+}}
+else {
+    echo "<script>alert('Wrong Email or Password ')</script> ";
+    include "index.php";
+    }
+  
+
+
 ?>
