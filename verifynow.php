@@ -1,51 +1,65 @@
-<?php
-session_start();
-include "server.php";
-$d=$_POST['username'];
-$e=$_POST['password'];
-$salted="saltedsfgfgbgvg".$d;
- 	$saltsh=hash('sha1', $salted);
-$t=0;
+<?php 
+ //LOGIN USER
+if (isset($_POST['login_user ) {
+  $username = $db->real_escape_string($_POST['username']);
+  $password = $db->real_escape_string($_POST['password']);
 
+  if (empty($username)) {
+    array_push($errors, "Username is required");
+  }
+  if (empty($password)) {
+    array_push($errors, "Password is required");
+  }
 
-$f=mysqli_query($db,"select * from users where username='$username'");
-while ($p=mysqli_fetch_array($f)) {
-	if ($uname==$p['username'] and $saltsh==$p['password']) {
-		$t=1;
-		$h=$p['username'];
-		$b=$p['password'];
-	}
-}
-if ($t==1) {
-	$query = "SELECT * FROM users WHERE username='$username' AND status='Verified' ";
+  if (count($errors) == 0) {
+
+    $cpassword=$password;
+    $password = sha1($password);
+    $query = "SELECT * FROM users WHERE username=? AND password=?";
+    $stmt = $db->prepare($query);
+    $stmt->bind_param('ss',$username,$password);
+    if($stmt->execute()){
+    $result = $stmt->get_result();
+    $num_rows = $result->num_rows;
+  }
+  if($num_rows > 0){
+    
+$query = "SELECT * FROM users WHERE email_status='Verified' ";
     $stmt = $db->prepare($query);
     if($stmt->execute()){
     $result = $stmt->get_result();
     $num_rows = $result->num_rows;
   }
-
   if($num_rows > 0){
+   
+      $_SESSION['username'] = $username;
+      $_SESSION['success'] = "You are now logged in";
 
-header("location:home.php");
-//echo "<button><a href='logout.php'>logout</a></button>";
-
-
-$_SESSION['k1']=$h;
-$_SESSION['k2']=$b;
-if(!empty($_POST['remember'])) {
-	setcookie("memberlogin",$_POST['username'],time()+ 3600);
-	setcookie("memberpassword",$_POST['password'],time()+ 3600);
-	echo "cookies.set.successfully";
-
-}}
+      // if remember me clicked . Values will be stored in $_COOKIE  array
+      if(!empty($_POST["remember"])) {
+//COOKIES for username
+setcookie ("cuser",$_POST["username"],time()+ (10 * 365  24 * 60 * 60));
+//COOKIES for password
+setcookie ("cpass",$cpassword,time()+ (10 * 365 * 24 * 60 * 60));
+} else {
+if(isset($_COOKIE["cuser"])) {
+setcookie ("cuser","");
+if(isset($_COOKIE["cpass"])) {
+setcookie ("cpass","");
+        }
+      }
+  
+  }
+  header('location:index.php');
+}
+}
 else{
-	header("location:loginfile.php");
+
+array_push($errors, "Account Not Verified ");
+array_push($verifynow, "Verify Now ");
 }
-}
-else
-{
-	echo "<script>alert('username or password incorrect!')</script>";
- 	echo "<script>location.href='index.php'</script>";
-}
+}else {
+      array_push($errors, "Wrong username/password combination ");
+    }}}
 
 ?>
