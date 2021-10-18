@@ -32,12 +32,12 @@ include('server.php')
   <form method="post" action="loginfrom.php">
   	  	<div class="input-group">
   		<label>Username</label>
-  		<input type="text" name="username" required="" value="<?php if(isset($_COOKIE["memberlogin"])) { echo $_COOKIE["member_login"]; } ?>" class="form-control" >  
+  		<input type="text" name="username" required="" value="<?php if(isset($_COOKIE["memberlogin"])) { echo $_COOKIE["username"]; } ?>" class="form-control" >  
     </div> 
   	</div>
   	<div class="input-group">
   		<label>Password</label>
-      <input type="password" name="password" required="" value="<?php if(isset($_COOKIE["memberpassword"])) { echo $_COOKIE["member_password"]; } ?>" class="form-control">   
+      <input type="password" name="password" required="" value="<?php if(isset($_COOKIE["memberpassword"])) { echo $_COOKIE["password"]; } ?>" class="form-control">   
     </div> 
     
       

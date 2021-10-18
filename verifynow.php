@@ -1,8 +1,8 @@
 <?php 
  //LOGIN USER
-if (isset($_POST['login_user ']) {
-  $username = $db->real_escape_string($_POST['username']);
-  $password = $db->real_escape_string($_POST['password']);
+if (isset($_POST['login ']) {
+  $d = $db->real_escape_string($_POST['username']);
+  $e = $db->real_escape_string($_POST['password']);
 
   if (empty($username)) {
     array_push($errors, "Username is required");
@@ -24,7 +24,7 @@ if (isset($_POST['login_user ']) {
   }
   if($num_rows > 0){
     
-$query = "SELECT * FROM users WHERE email_status='Verified' ";
+$query = "SELECT * FROM users WHERE status='Verified' ";
     $stmt = $db->prepare($query);
     if($stmt->execute()){
     $result = $stmt->get_result();
@@ -38,14 +38,14 @@ $query = "SELECT * FROM users WHERE email_status='Verified' ";
       // if remember me clicked . Values will be stored in $_COOKIE  array
       if(!empty($_POST["remember"])) {
 //COOKIES for username
-setcookie ("cuser",$_POST["username"],time()+ (10 * 365  24 * 60 * 60));
+setcookie ("memberlogin",$_POST["username"],time()+ (10 * 365  24 * 60 * 60));
 //COOKIES for password
-setcookie ("cpass",$cpassword,time()+ (10 * 365 * 24 * 60 * 60));
+setcookie ("memberpassword",$cpassword,time()+ (10 * 365 * 24 * 60 * 60));
 } else {
-if(isset($_COOKIE["cuser"])) {
-setcookie ("cuser","");
-if(isset($_COOKIE["cpass"])) {
-setcookie ("cpass","");
+if(isset($_COOKIE["memberlogin"])) {
+setcookie ("memberlogin","");
+if(isset($_COOKIE["memberpassword"])) {
+setcookie ("memberpassword","");
         }
       }
   

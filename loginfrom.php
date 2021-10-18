@@ -52,11 +52,11 @@ if($num_rows > 0){
    {  
     if(isset($_COOKIE["memberlogin"]))   
     {  
-     setcookie ("memberlogin","");  
+     setcookie ("username","");  
     }  
     if(isset($_COOKIE["memberpassword"]))   
     {  
-     setcookie ("memberpassword","");  
+     setcookie ("password","");  
     }  
     
   else  
