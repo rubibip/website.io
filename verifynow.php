@@ -1,6 +1,6 @@
 <?php 
  //LOGIN USER
-if (isset($_POST['login_user ) {
+if (isset($_POST['login_user ']) {
   $username = $db->real_escape_string($_POST['username']);
   $password = $db->real_escape_string($_POST['password']);
 
@@ -60,6 +60,6 @@ array_push($verifynow, "Verify Now ");
 }
 }else {
       array_push($errors, "Wrong username/password combination ");
-    }}}
+    }}
 
 ?>
