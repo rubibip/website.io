@@ -181,7 +181,7 @@ if (!isset($_SESSION['username'],$_SESSION['password'])) {
   <li>Second footer Text</li>
   <li>Third footer Text</li>
   <li>Fourth footer Text</li>
-  <li>Fifth footer Text</li>
+  <li><a href="https://www.tiktok.com/">Tik Tok</a></li>
   </ul>
   </div>
  

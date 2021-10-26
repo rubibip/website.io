@@ -18,7 +18,7 @@ include('server.php')
 <!DOCTYPE html>
 <html>
 <head>
-  <title>WEB SITE</title>
+  <title>Login Before you access</title>
   <link rel="stylesheet" type="text/css" href="css1.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
@@ -32,17 +32,17 @@ include('server.php')
   <form method="post" action="loginfrom.php">
   	  	<div class="input-group">
   		<label>Username</label>
-  		<input type="text" name="username" required="" value="<?php if(isset($_COOKIE["memberlogin"])) { echo $_COOKIE["username"]; } ?>" class="form-control" >  
+  		<input type="text" name="username" required="" value="<?php if(isset($_COOKIE["username"])) { echo $_COOKIE["username"]; } ?>" class="form-control" >  
     </div> 
   	</div>
   	<div class="input-group">
   		<label>Password</label>
-      <input type="password" name="password" required="" value="<?php if(isset($_COOKIE["memberpassword"])) { echo $_COOKIE["password"]; } ?>" class="form-control">   
+      <input type="password" name="password" required="" value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>" class="form-control">   
     </div> 
     
       
     <div class="input-group">  
-     <input type="checkbox" name="remember" value="<?php if(isset($_COOKIE["membername"])) { ?> checked <?php } ?>" >  
+     <input type="checkbox" name="remember" value="<?php if(isset($_COOKIE["remember"])) { ?> checked <?php } ?>" >  
      <label for="remember-me">Remember me</label>  
     </div> 
      

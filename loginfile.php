@@ -1,8 +1,16 @@
-<?php 
-include('server.php') 
+<?php
 
-
+include 'token.php';
+ 
+$csrf = new csrf();
+$token_id = $csrf->get_token_id();
+$token_value = $csrf->get_token($token_id);
+if($csrf->check_valid('post')) {
+  var_dump($_POST[$token_id]);
+} 
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,23 +28,25 @@ include('server.php')
   <form method="post" action="verifynow.php">
   	  	<div class="input-group">
   		<label>Username</label>
-  		<input type="text" name="username" required="" value="<?php if(isset($_COOKIE['memberlogin'])) {echo $_COOKIE['username'];} ?>"  class="form-control" >  
+  		<input type="text" name="username" required=""  onblur="if(this.name=='')this.name='Username';" onfocus="if(this.name=='username')this.name='';" value="<?php if(isset($_COOKIE['username'])) {echo $_COOKIE['username'];} ?>"  class="form-control" >  
     </div> 
   	</div>
   	<div class="input-group">
   		<label>Password</label>
-      <input type="password" name="password" required="" value="<?php if(isset($_COOKIE['memberpassword'])) {echo $_COOKIE['password'];} ?>" class="form-control">   
+      <input type="password" name="password" required="" onblur="if(this.name=='')this.name='Password';" onfocus="if(this.name=='Password')this.name='';" value="<?php if(isset($_COOKIE['password'])) {echo $_COOKIE['password'];} ?>" class="form-control">   
     </div> 
     
       
     <div class="input-group">  
-     <input type="checkbox" name="remember" value="<?php if(isset($_COOKIE["membername"])) { ?> checked <?php } ?>"/>  
+     <input type="checkbox" name="remember" value="<?php if(isset($_COOKIE["remember"])) { ?> checked <?php } ?>"/>  
      <label for="remember-me">Remember me</label>  
     </div> 
-     <p><a href="forgetp.php">forget password</a></p>
+     <div class="link forget-pass text-left"><a href="forgetpassword.php">Forgot password?</a></div>
     <div class="input-group">  
-     <div><input type="submit" name="verifynow" value="Login" class="btn btn-success"></span></div>  
-    </div> 
+     <div><input type="submit" name="login" class="btn btn-success"></div>  
+    </div>
+    <div>
+      <p><a href="verify_email.php">verify now</a></p></div> 
      
   	</div>
 

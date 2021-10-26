@@ -44,17 +44,17 @@ if($num_rows > 0){
 
            if(!empty($_POST["remember"]))   
    {  $check=$_POST['remember'];
-    setcookie ("memberlogin",$d,time()+ (10 * 365 * 24 * 60 * 60));  
-    setcookie ("memberpassword",$_POST['password'],time()+ (10 * 365 * 24 * 60 * 60));
-    $_SESSION["membername"] = $username;
+    setcookie ("username",$d,time()+ (10 * 365 * 24 * 60 * 60));  
+    setcookie ("password",$_POST['password'],time()+ (10 * 365 * 24 * 60 * 60));
+    $_SESSION["username"] = $username;
    }  
    else  
    {  
-    if(isset($_COOKIE["memberlogin"]))   
+    if(isset($_COOKIE["username"]))   
     {  
      setcookie ("username","");  
     }  
-    if(isset($_COOKIE["memberpassword"]))   
+    if(isset($_COOKIE["password"]))   
     {  
      setcookie ("password","");  
     }  
@@ -69,12 +69,12 @@ header('location:home.php');
 }
 else{
 
-header('location:loginForm.php');
+header('location:loginfrom.php');
 
 }}
 else {
-    echo "<script>alert('Wrong Email or Password ')</script> ";
-    include "index.php";
+    echo "<script>alert('Wrong username or Password ')</script> ";
+    include "loginfile.php";
     }
   
 
